@@ -2,13 +2,14 @@
 using Autofac.Integration.Mvc;
 using AutoMapper;
 using DataAccess;
-using DataAccess.Entities;
 using DataAccess.Repositories;
+using EntityModels;
 using SupportTicketApplication.App_Start;
 using SupportTicketApplication.Controllers;
 using SupportTicketApplication.Models.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Reflection;
 using System.Web;
@@ -27,13 +28,16 @@ namespace SupportTicketApplication
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            var builder = new ContainerBuilder();            
+            #region Configure Autofac
+
+            var builder = new ContainerBuilder();
 
             // Register your MVC controllers.
             builder.RegisterControllers(typeof(MvcApplication).Assembly);
 
             // register the TicketRepository as the implementation of ITicketRepository
-            builder.RegisterType<TicketRepository>().As<ITicketRepository>();
+            builder.RegisterType<TicketRepository>().As<ITicketRepository>();        
+                
 
             //// OPTIONAL: Register model binders that require DI.
             //builder.RegisterModelBinders(Assembly.GetExecutingAssembly());
@@ -52,12 +56,25 @@ namespace SupportTicketApplication
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
 
+            #endregion
+
+            #region Configure Automapper
+
             // set up the Automapper for mapping objects to other objects
             Mapper.Initialize(config =>
             {
-                config.CreateMap<Ticket, TicketViewModel>().ReverseMap();
+               config.CreateMap<Ticket, TicketViewModel>().ReverseMap();
                 //config.CreateMap<Comment, CommentViewModel>().ReverseMap();
             });
+
+            #endregion
+
+            #region Configure Identity Framework
+
+            // TODO: Configure ASP.Net Identity Framework
+
+            #endregion
+
         }
     }
 }

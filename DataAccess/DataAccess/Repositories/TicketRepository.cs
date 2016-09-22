@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DataAccess.Contexts;
+using EntityModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,8 +13,27 @@ namespace DataAccess.Repositories
     /// </summary>
     public class TicketRepository : ITicketRepository
     {
+        #region Class level variables
+
+        private SupportTicketContext c_context;
+
+        #endregion
+
         #region Constructor
-        // TODO: Dependency injection in order to set TicketContext
+
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        /// <param name="context"></param>
+        public TicketRepository()
+        {
+            c_context = new SupportTicketContext();
+        }
+        //public TicketRepository(SupportTicketContext context)
+        //{
+        //    c_context = context;
+        //}        
+
         #endregion
 
         #region Methods
@@ -20,28 +41,17 @@ namespace DataAccess.Repositories
         /// <summary>
         /// Retrieves all support tickets from the repository.
         /// </summary>
-        /// <returns>IList of all tickets found in the repository.</returns>
+        /// <returns>IList of all tickets found in the repository in order of date created.</returns>
         public IList<Ticket> RetrieveAllTickets()
         {
             try
             {
                 // TODO: Hook up to EF to replace hardcoded ticket creation
 
-                List<Ticket> tickets = new List<Ticket>();
-                Ticket t1 = new Ticket();
-                t1.ID = 1;
-                t1.Title = "MyTitle";
-                t1.Description = "MyDescription";
-                tickets.Add(t1);
+                
 
-                Ticket t2 = new Ticket();
-                t2.ID = 2;
-                t2.Title = "MyTitle2";
-                t2.Description = "MyDescription2";
-                tickets.Add(t2);
-
-                // return the tickets
-                return tickets;
+                // return the tickets in date created order
+                return c_context.Tickets.OrderBy(x => x.DateCreated).ToList<Ticket>();
             }
             catch(Exception ex)
             {

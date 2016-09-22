@@ -14,3 +14,5 @@ C:\Users\julian.willing\Documents\Visual Studio 2015\WebSites\SupportTicketAppli
 C:\Users\julian.willing\Documents\Visual Studio 2015\WebSites\SupportTicketApplication\DataAccess\DataAccess\obj\Debug\DataAccess.pdb
 C:\Users\julian.willing\Documents\Visual Studio 2015\WebSites\SupportTicketApplication\DataAccess\DataAccess\bin\Debug\EntityModels.dll
 C:\Users\julian.willing\Documents\Visual Studio 2015\WebSites\SupportTicketApplication\DataAccess\DataAccess\bin\Debug\EntityModels.pdb
+C:\Users\julian.willing\Documents\Visual Studio 2015\WebSites\SupportTicketApplication\DataAccess\DataAccess\obj\Debug\DataAccess.Migrations.InitialCreate.resources
+C:\Users\julian.willing\Documents\Visual Studio 2015\WebSites\SupportTicketApplication\DataAccess\DataAccess\obj\Debug\DataAccess.csproj.GenerateResource.Cache

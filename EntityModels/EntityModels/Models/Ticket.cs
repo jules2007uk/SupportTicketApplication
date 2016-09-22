@@ -1,5 +1,4 @@
-﻿using DataAccess.Entities;
-using EntityModels.Models.Enums;
+﻿using EntityModels.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess
+namespace EntityModels
 {
     /// <summary>
     /// Class which maps to the Ticket entity.

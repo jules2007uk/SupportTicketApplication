@@ -1,4 +1,4 @@
-﻿using DataAccess.Entities;
+﻿using EntityModels;
 using EntityModels.Models.Enums;
 using System;
 using System.Collections.Generic;

@@ -57,6 +57,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contexts\SupportTicketContext.cs" />
+    <Compile Include="Migrations\201609221830442_InitialCreate.cs" />
+    <Compile Include="Migrations\201609221830442_InitialCreate.Designer.cs">
+      <DependentUpon>201609221830442_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ITicketRepository.cs" />
     <Compile Include="Repositories\TicketRepository.cs" />
@@ -73,6 +79,11 @@
       <Project>{0a6b385a-7e22-4292-973f-f1663a8a09c0}</Project>
       <Name>EntityModels</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201609221830442_InitialCreate.resx">
+      <DependentUpon>201609221830442_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

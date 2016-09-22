@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using DataAccess;
+using DataAccess.Contexts;
 using DataAccess.Repositories;
+using EntityModels;
 using EntityModels.Models;
 using SupportTicketApplication.Models.ViewModels;
 using System;
