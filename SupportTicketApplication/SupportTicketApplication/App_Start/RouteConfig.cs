@@ -18,6 +18,12 @@ namespace SupportTicketApplication
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "Tickets",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Ticket", action = "Index", id = UrlParameter.Optional }
+            );
         }
     }
 }

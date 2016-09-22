@@ -51,6 +51,11 @@ namespace DataAccess
         //TODO: Use correct variable type once Identity Framework has been implemented
         public string Assignee { get; set; }
 
+        /// <summary>
+        /// Status of the ticket.
+        /// </summary>
+        public TicketStatus Status { get; set; }
+
         #endregion
     }
 }
