@@ -12,11 +12,15 @@ namespace DataAccess.Repositories
     public class TicketRepository : ITicketRepository
     {
         #region Constructor
-        // TODO: Dependency injection in order to set TicketContext and ITicketRepository
+        // TODO: Dependency injection in order to set TicketContext
         #endregion
 
         #region Methods
 
+        /// <summary>
+        /// Retrieves all support tickets from the repository.
+        /// </summary>
+        /// <returns>IList of all tickets found in the repository.</returns>
         public IList<Ticket> RetrieveAllTickets()
         {
             try

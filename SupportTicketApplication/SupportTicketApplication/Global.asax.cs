@@ -1,8 +1,12 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
+using AutoMapper;
+using DataAccess;
+using DataAccess.Entities;
 using DataAccess.Repositories;
 using SupportTicketApplication.App_Start;
 using SupportTicketApplication.Controllers;
+using SupportTicketApplication.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +20,7 @@ namespace SupportTicketApplication
 {
     public class MvcApplication : System.Web.HttpApplication
     {
+        //TODO: Clean up this class
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -46,6 +51,13 @@ namespace SupportTicketApplication
             // Set the dependency resolver to be Autofac.
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+
+            // set up the Automapper for mapping objects to other objects
+            Mapper.Initialize(config =>
+            {
+                config.CreateMap<Ticket, TicketViewModel>().ReverseMap();
+                //config.CreateMap<Comment, CommentViewModel>().ReverseMap();
+            });
         }
     }
 }

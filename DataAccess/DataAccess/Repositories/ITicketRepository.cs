@@ -13,6 +13,10 @@ namespace DataAccess.Repositories
     {
         #region Methods
 
+        /// <summary>
+        /// Retrieves all support tickets from the repository.
+        /// </summary>
+        /// <returns>IList of all tickets found in the repository.</returns>
         IList<Ticket> RetrieveAllTickets();
 
         #endregion
