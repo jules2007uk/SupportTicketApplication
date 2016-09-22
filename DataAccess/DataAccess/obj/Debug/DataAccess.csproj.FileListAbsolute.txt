@@ -1,0 +1,14 @@
+C:\Users\julian.willing\Documents\Visual Studio 2015\WebSites\SupportTicketApplication\DataAccess\DataAccess\bin\Debug\DataAccess.dll.config
+C:\Users\julian.willing\Documents\Visual Studio 2015\WebSites\SupportTicketApplication\DataAccess\DataAccess\bin\Debug\DataAccess.dll
+C:\Users\julian.willing\Documents\Visual Studio 2015\WebSites\SupportTicketApplication\DataAccess\DataAccess\bin\Debug\DataAccess.pdb
+C:\Users\julian.willing\Documents\Visual Studio 2015\WebSites\SupportTicketApplication\DataAccess\DataAccess\bin\Debug\EntityFramework.dll
+C:\Users\julian.willing\Documents\Visual Studio 2015\WebSites\SupportTicketApplication\DataAccess\DataAccess\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\julian.willing\Documents\Visual Studio 2015\WebSites\SupportTicketApplication\DataAccess\DataAccess\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+C:\Users\julian.willing\Documents\Visual Studio 2015\WebSites\SupportTicketApplication\DataAccess\DataAccess\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\julian.willing\Documents\Visual Studio 2015\WebSites\SupportTicketApplication\DataAccess\DataAccess\bin\Debug\EntityFramework.xml
+C:\Users\julian.willing\Documents\Visual Studio 2015\WebSites\SupportTicketApplication\DataAccess\DataAccess\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\julian.willing\Documents\Visual Studio 2015\WebSites\SupportTicketApplication\DataAccess\DataAccess\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+C:\Users\julian.willing\Documents\Visual Studio 2015\WebSites\SupportTicketApplication\DataAccess\DataAccess\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\julian.willing\Documents\Visual Studio 2015\WebSites\SupportTicketApplication\DataAccess\DataAccess\obj\Debug\DataAccess.csprojResolveAssemblyReference.cache
+C:\Users\julian.willing\Documents\Visual Studio 2015\WebSites\SupportTicketApplication\DataAccess\DataAccess\obj\Debug\DataAccess.dll
+C:\Users\julian.willing\Documents\Visual Studio 2015\WebSites\SupportTicketApplication\DataAccess\DataAccess\obj\Debug\DataAccess.pdb

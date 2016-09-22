@@ -1,0 +1,5 @@
+C:\Users\julian.willing\Documents\Visual Studio 2015\WebSites\SupportTicketApplication\EntityModels\EntityModels\bin\Debug\EntityModels.dll
+C:\Users\julian.willing\Documents\Visual Studio 2015\WebSites\SupportTicketApplication\EntityModels\EntityModels\bin\Debug\EntityModels.pdb
+C:\Users\julian.willing\Documents\Visual Studio 2015\WebSites\SupportTicketApplication\EntityModels\EntityModels\obj\Debug\EntityModels.csprojResolveAssemblyReference.cache
+C:\Users\julian.willing\Documents\Visual Studio 2015\WebSites\SupportTicketApplication\EntityModels\EntityModels\obj\Debug\EntityModels.dll
+C:\Users\julian.willing\Documents\Visual Studio 2015\WebSites\SupportTicketApplication\EntityModels\EntityModels\obj\Debug\EntityModels.pdb
