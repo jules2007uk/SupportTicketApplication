@@ -39,16 +39,34 @@ namespace BusinessLogic
         #region Methods
 
         /// <summary>
-        /// Retrieves all tickets from the repository supplied by the constructor.
+        /// Retrieves all tickets from the repository supplied in the constructor.
         /// </summary>
         /// <returns></returns>
         public IList<Ticket> RetrieveAllTickets()
         {
-            // fetch all tickets from the repository supplied in the constructor method
-            IList<Ticket> tickets = c_repository.RetrieveAllTickets();
-            
-            // return said tickets
-            return tickets;
+            // fetch all tickets from the repository supplied in the constructor method and return them
+            return c_repository.RetrieveAllTickets();
+        }
+
+        /// <summary>
+        /// Retrieves specific ticket from the repository supplied in the constructor.
+        /// </summary>
+        /// <param name="ticketId"></param>
+        /// <returns></returns>
+        public Ticket RetrieveTicket(int ticketId)
+        {
+            // fetch ticket for ticket ID supplied
+            return c_repository.RetrieveTicket(ticketId);
+        }
+
+        /// <summary>
+        /// Saves the ticket supplied to the repository supplied in the constructor.
+        /// </summary>
+        /// <param name="ticket"></param>
+        /// <returns>Returns the updated ticket.</returns>
+        public Ticket UpdateTicket(Ticket ticket)
+        {
+            return c_repository.UpdateTicket(ticket);
         }
 
         #endregion

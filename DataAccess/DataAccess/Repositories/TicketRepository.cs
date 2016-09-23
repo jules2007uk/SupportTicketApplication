@@ -51,6 +51,59 @@ namespace DataAccess.Repositories
             }
         }
 
+        /// <summary>
+        /// Retrieves a single support ticket for the ticket ID supplied.
+        /// </summary>
+        /// <param name="ticketId">The ID of the ticket to retrieve.</param>
+        /// <returns></returns>
+        public Ticket RetrieveTicket(int ticketId)
+        {
+            try
+            {
+                // return ticket for ID supplied
+                return c_context.Tickets.FirstOrDefault<Ticket>(t => t.ID == ticketId);
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates the ticket supplied.
+        /// </summary>
+        /// <param name="ticket">The ticket to save.</param>
+        /// <returns>Returns the updated ticket.</returns>
+        public Ticket UpdateTicket(Ticket ticket)
+        {
+            try
+            {
+                // retrieve the existing ticket from the db
+                Ticket ticketToUpdate = c_context.Tickets.Find(ticket.ID);
+
+                // map the updatable properties to the object to update
+                // (this could probably be done more elegantly)
+                ticketToUpdate.Assignee = ticket.Assignee;                
+                ticketToUpdate.Description = ticket.Description;
+                ticketToUpdate.Priority = ticket.Priority;
+                ticketToUpdate.Status = ticket.Status;
+                ticketToUpdate.Title = ticket.Title;                
+
+                // set the ticket entity to state modified                
+                c_context.Entry(ticketToUpdate).State = System.Data.Entity.EntityState.Modified;                
+                
+                // save the change
+                c_context.SaveChanges();
+
+                // return the updated ticket
+                return ticketToUpdate;              
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
+        }
+
         #endregion
     }
 }

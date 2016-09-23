@@ -63,8 +63,8 @@ namespace SupportTicketApplication
             // set up the Automapper for mapping objects to other objects
             Mapper.Initialize(config =>
             {
-               config.CreateMap<Ticket, TicketsIndexViewModel>().ReverseMap();
-                //config.CreateMap<Comment, CommentViewModel>().ReverseMap();
+               config.CreateMap<Ticket, TicketIndexViewModel>().ReverseMap();
+               config.CreateMap<Ticket, TicketDetailViewModel>().ReverseMap();                
             });
 
             #endregion

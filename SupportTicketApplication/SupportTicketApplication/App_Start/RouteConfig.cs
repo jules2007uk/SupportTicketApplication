@@ -20,9 +20,9 @@ namespace SupportTicketApplication
             );
 
             routes.MapRoute(
-                name: "Tickets",
+                name: "Ticket",
                 url: "{controller}/{action}/",
-                defaults: new { controller = "Tickets", action = "Index"}
+                defaults: new { controller = "Ticket", action = "Index"}
             );
         }
     }
