@@ -15,14 +15,14 @@ namespace SupportTicketApplication
 
             routes.MapRoute(
                 name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                url: "{controller}/{action}/",
+                defaults: new { controller = "Home", action = "Index"}
             );
 
             routes.MapRoute(
-                name: "Ticket",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Ticket", action = "Index", id = UrlParameter.Optional }
+                name: "Tickets",
+                url: "{controller}/{action}/",
+                defaults: new { controller = "Tickets", action = "Index"}
             );
         }
     }

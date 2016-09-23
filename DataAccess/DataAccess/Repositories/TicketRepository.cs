@@ -24,15 +24,11 @@ namespace DataAccess.Repositories
         /// <summary>
         /// Default constructor.
         /// </summary>
-        /// <param name="context"></param>
-        public TicketRepository()
+        /// <param name="context">The context object used for querying of Tickets.</param>
+        public TicketRepository(SupportTicketContext context)
         {
-            c_context = new SupportTicketContext();
+            c_context = context;
         }
-        //public TicketRepository(SupportTicketContext context)
-        //{
-        //    c_context = context;
-        //}        
 
         #endregion
 
@@ -46,12 +42,8 @@ namespace DataAccess.Repositories
         {
             try
             {
-                // TODO: Hook up to EF to replace hardcoded ticket creation
-
-                
-
-                // return the tickets in date created order
-                return c_context.Tickets.OrderBy(x => x.DateCreated).ToList<Ticket>();
+                // return all tickets and their associated comments using eager loading
+                return c_context.Tickets.Include("Comments").OrderBy(x => x.DateCreated).ToList<Ticket>();
             }
             catch(Exception ex)
             {

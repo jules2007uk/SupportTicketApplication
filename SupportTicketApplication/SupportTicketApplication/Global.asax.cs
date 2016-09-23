@@ -2,6 +2,7 @@
 using Autofac.Integration.Mvc;
 using AutoMapper;
 using DataAccess;
+using DataAccess.Contexts;
 using DataAccess.Repositories;
 using EntityModels;
 using SupportTicketApplication.App_Start;
@@ -35,9 +36,8 @@ namespace SupportTicketApplication
             // Register your MVC controllers.
             builder.RegisterControllers(typeof(MvcApplication).Assembly);
 
-            // register the TicketRepository as the implementation of ITicketRepository
-            builder.RegisterType<TicketRepository>().As<ITicketRepository>();        
-                
+            // register the TicketRepository as the implementation of ITicketRepository, with the context parameter specified
+            builder.RegisterType<TicketRepository>().As<ITicketRepository>().WithParameter("context", new SupportTicketContext());
 
             //// OPTIONAL: Register model binders that require DI.
             //builder.RegisterModelBinders(Assembly.GetExecutingAssembly());
@@ -63,7 +63,7 @@ namespace SupportTicketApplication
             // set up the Automapper for mapping objects to other objects
             Mapper.Initialize(config =>
             {
-               config.CreateMap<Ticket, TicketViewModel>().ReverseMap();
+               config.CreateMap<Ticket, TicketsIndexViewModel>().ReverseMap();
                 //config.CreateMap<Comment, CommentViewModel>().ReverseMap();
             });
 

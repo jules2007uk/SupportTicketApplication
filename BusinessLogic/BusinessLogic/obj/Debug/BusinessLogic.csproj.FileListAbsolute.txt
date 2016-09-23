@@ -1,0 +1,12 @@
+C:\Users\julian.willing\Documents\Visual Studio 2015\WebSites\SupportTicketApplication\BusinessLogic\BusinessLogic\bin\Debug\BusinessLogic.dll.config
+C:\Users\julian.willing\Documents\Visual Studio 2015\WebSites\SupportTicketApplication\BusinessLogic\BusinessLogic\bin\Debug\BusinessLogic.dll
+C:\Users\julian.willing\Documents\Visual Studio 2015\WebSites\SupportTicketApplication\BusinessLogic\BusinessLogic\bin\Debug\BusinessLogic.pdb
+C:\Users\julian.willing\Documents\Visual Studio 2015\WebSites\SupportTicketApplication\BusinessLogic\BusinessLogic\bin\Debug\DataAccess.dll
+C:\Users\julian.willing\Documents\Visual Studio 2015\WebSites\SupportTicketApplication\BusinessLogic\BusinessLogic\bin\Debug\EntityModels.dll
+C:\Users\julian.willing\Documents\Visual Studio 2015\WebSites\SupportTicketApplication\BusinessLogic\BusinessLogic\bin\Debug\EntityFramework.dll
+C:\Users\julian.willing\Documents\Visual Studio 2015\WebSites\SupportTicketApplication\BusinessLogic\BusinessLogic\bin\Debug\DataAccess.pdb
+C:\Users\julian.willing\Documents\Visual Studio 2015\WebSites\SupportTicketApplication\BusinessLogic\BusinessLogic\bin\Debug\EntityModels.pdb
+C:\Users\julian.willing\Documents\Visual Studio 2015\WebSites\SupportTicketApplication\BusinessLogic\BusinessLogic\bin\Debug\EntityFramework.xml
+C:\Users\julian.willing\Documents\Visual Studio 2015\WebSites\SupportTicketApplication\BusinessLogic\BusinessLogic\obj\Debug\BusinessLogic.csprojResolveAssemblyReference.cache
+C:\Users\julian.willing\Documents\Visual Studio 2015\WebSites\SupportTicketApplication\BusinessLogic\BusinessLogic\obj\Debug\BusinessLogic.dll
+C:\Users\julian.willing\Documents\Visual Studio 2015\WebSites\SupportTicketApplication\BusinessLogic\BusinessLogic\obj\Debug\BusinessLogic.pdb

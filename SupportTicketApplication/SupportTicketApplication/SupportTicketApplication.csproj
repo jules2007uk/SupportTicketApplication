@@ -159,7 +159,7 @@
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
     <Content Include="Web.config" />
-    <Content Include="Views\Ticket\Index.cshtml" />
+    <Content Include="Views\Tickets\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -169,7 +169,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\ViewModels\TicketViewModel.cs" />
+    <Compile Include="Models\ViewModels\TicketIndexViewModel.cs" />
+    <Compile Include="Models\ViewModels\TicketsIndexViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -189,6 +190,10 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\BusinessLogic\BusinessLogic\BusinessLogic.csproj">
+      <Project>{bd9f5d29-5ff7-4eb1-bbb5-6519f03e42b4}</Project>
+      <Name>BusinessLogic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\DataAccess\DataAccess\DataAccess.csproj">
       <Project>{8a10cfac-3d51-4543-b177-9b60b0b9337f}</Project>
       <Name>DataAccess</Name>

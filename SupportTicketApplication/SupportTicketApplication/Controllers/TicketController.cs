@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BusinessLogic;
 using DataAccess;
 using DataAccess.Contexts;
 using DataAccess.Repositories;
@@ -14,7 +15,7 @@ using System.Web.Mvc;
 namespace SupportTicketApplication.Controllers
 {
     //[Err]
-    public class TicketController : Controller
+    public class TicketsController : Controller
     {
         #region Class level variables
 
@@ -24,7 +25,7 @@ namespace SupportTicketApplication.Controllers
 
         #region Constructor
 
-        public TicketController(ITicketRepository repository)
+        public TicketsController(ITicketRepository repository)
         {
             c_repository = repository;
         }
@@ -36,11 +37,14 @@ namespace SupportTicketApplication.Controllers
         // GET: Tickets
         public ActionResult Index()
         {
+            // new instance of the Ticket Helper service
+            TicketHelper ticketHelper = new TicketHelper(c_repository);
+            
             // call the Ticket repository to retrieve list of Ticket
-            IList<Ticket> tickets = c_repository.RetrieveAllTickets();
+            IList<Ticket> tickets = ticketHelper.RetrieveAllTickets();
 
-            // convert the Tickets to TicketViewModels using Automapper
-            IList<TicketViewModel> ticketsAsViewModels = Mapper.Map<IList<TicketViewModel>>(tickets);
+            // convert the Tickets to TicketsIndexViewModels using Automapper
+            IList<TicketsIndexViewModel> ticketsAsViewModels = Mapper.Map<IList<TicketsIndexViewModel>>(tickets);
 
             return View(ticketsAsViewModels);
         }
