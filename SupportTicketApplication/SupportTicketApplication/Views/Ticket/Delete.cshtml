@@ -74,7 +74,7 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-danger" data-toggle="tooltip" title="Warning: This cannot be undone."/> |
+            <input type="submit" value="Delete" class="btn btn-danger" data-toggle="tooltip" title="Warning: This cannot be undone." onclick="return confirm('Are you sure you wish to delete this ticket?');"/> |
             @Html.ActionLink("Back to List", "Index")
         </div>
     }
