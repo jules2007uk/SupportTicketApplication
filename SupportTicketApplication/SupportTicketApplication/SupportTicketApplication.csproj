@@ -158,6 +158,8 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
+    <Content Include="Scripts\site.js" />
+    <Content Include="Scripts\sorttable.js" />
     <Content Include="Web.config" />
     <Content Include="Views\Ticket\Index.cshtml" />
   </ItemGroup>

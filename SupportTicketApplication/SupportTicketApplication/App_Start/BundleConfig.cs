@@ -29,6 +29,14 @@ namespace SupportTicketApplication.App_Start
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            // new script bundle for sorttables for allowing sorting by column on html tables
+            bundles.Add(new ScriptBundle("~/bundles/sorttable").Include(
+                "~/Scripts/sorttable.js"));
+
+            // new script bundle for any custom scripts
+            bundles.Add(new ScriptBundle("~/Custom/js").Include(
+                    "~/Scripts/site.js"));
         }
     }
 }
