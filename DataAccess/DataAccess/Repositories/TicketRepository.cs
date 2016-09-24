@@ -37,71 +37,137 @@ namespace DataAccess.Repositories
         /// <summary>
         /// Retrieves all support tickets from the repository.
         /// </summary>
-        /// <returns>IList of all tickets found in the repository in order of date created.</returns>
+        /// <returns>IList of all tickets found in the repository in order of date created.
+        /// Returns null if no tickets are found.</returns>
         public IList<Ticket> RetrieveAllTickets()
         {
+            IList<Ticket> tickets = null;
+
             try
             {
-                // return all tickets and their associated comments using eager loading
-                return c_context.Tickets.Include("Comments").OrderBy(x => x.DateCreated).ToList<Ticket>();
+                // retrieve all tickets and their associated comments using eager loading
+                tickets = c_context.Tickets.Include("Comments").OrderBy(x => x.DateCreated).ToList<Ticket>();
             }
             catch(Exception ex)
             {
-                throw;
+                // TODO: Log the exception                
             }
+
+            // finally return the tickets object
+            return tickets;
         }
 
         /// <summary>
         /// Retrieves a single support ticket for the ticket ID supplied.
         /// </summary>
         /// <param name="ticketId">The ID of the ticket to retrieve.</param>
-        /// <returns></returns>
+        /// <returns>Returns Ticket with the ticket ID supplied.
+        /// Returns null if no ticket was found with the ID supplied.</returns>
         public Ticket RetrieveTicket(int ticketId)
         {
-            try
+            Ticket ticket = null;
+
+            // check the parameter passed
+            if(ticketId > 0)
             {
-                // return ticket for ID supplied
-                return c_context.Tickets.FirstOrDefault<Ticket>(t => t.ID == ticketId);
+                try
+                {
+                    // retrieve ticket for ID supplied
+                    ticket = c_context.Tickets.FirstOrDefault<Ticket>(t => t.ID == ticketId);
+                }
+                catch (Exception ex)
+                {
+                    // TODO: Log the exception
+                }
             }
-            catch(Exception ex)
-            {
-                throw;
-            }
+
+            // return ticket object
+            return ticket;
         }
 
         /// <summary>
         /// Updates the ticket supplied.
         /// </summary>
         /// <param name="ticket">The ticket to save.</param>
-        /// <returns>Returns the updated ticket.</returns>
+        /// <returns>Returns the updated ticket.
+        /// Returns null if the ticket to update was not found.</returns>
         public Ticket UpdateTicket(Ticket ticket)
         {
-            try
+            Ticket ticketToUpdate = null;
+
+            // check the ticket passed via parameter
+            if(ticket != null)
             {
-                // retrieve the existing ticket from the db
-                Ticket ticketToUpdate = c_context.Tickets.Find(ticket.ID);
+                try
+                {
+                    // retrieve the existing ticket from the db
+                    ticketToUpdate = c_context.Tickets.Find(ticket.ID);
+                }
+                catch (Exception ex)
+                {
+                    // TODO: Log the exception - there was a problem whilst trying to retrieve the ticket
+                }
 
-                // map the updatable properties to the object to update
-                // (this could probably be done more elegantly)
-                ticketToUpdate.Assignee = ticket.Assignee;                
-                ticketToUpdate.Description = ticket.Description;
-                ticketToUpdate.Priority = ticket.Priority;
-                ticketToUpdate.Status = ticket.Status;
-                ticketToUpdate.Title = ticket.Title;                
+                if (ticketToUpdate != null)
+                {
+                    try
+                    {
+                        // map the updatable properties to the object to update
+                        // (this mapping could probably be done more elegantly)
+                        ticketToUpdate.Assignee = ticket.Assignee;
+                        ticketToUpdate.Description = ticket.Description;
+                        ticketToUpdate.Priority = ticket.Priority;
+                        ticketToUpdate.Status = ticket.Status;
+                        ticketToUpdate.Title = ticket.Title;
 
-                // set the ticket entity to state modified                
-                c_context.Entry(ticketToUpdate).State = System.Data.Entity.EntityState.Modified;                
-                
-                // save the change
-                c_context.SaveChanges();
+                        // set the ticket entity to state modified                
+                        c_context.Entry(ticketToUpdate).State = System.Data.Entity.EntityState.Modified;
 
-                // return the updated ticket
-                return ticketToUpdate;              
+                        // save the change
+                        c_context.SaveChanges();
+                    }
+                    catch (Exception ex)
+                    {
+                        // TODO: Log the exception - there was a problem attempting to update the existing Ticket entity
+                    }
+                }
             }
-            catch(Exception ex)
+
+            // hopefully return the updated ticket
+            return ticketToUpdate;
+        }
+
+        /// <summary>
+        /// Adds a new Ticket.
+        /// </summary>
+        /// <param name="ticket">The ticket to add.</param>
+        /// <returns>Returns the added ticket.
+        /// Returns null if there was a problem during the add process</returns>
+        public Ticket AddTicket(Ticket ticket)
+        {
+            
+            // check the ticket supplied via parameter
+            if (ticket != null)
             {
-                throw;
+                try
+                {
+                    // add the ticket to the context
+                    c_context.Tickets.Add(ticket);
+
+                    // save the change to the context
+                    c_context.SaveChanges();
+
+                    // return the added ticket
+                    return ticket;
+                }
+                catch (Exception ex)
+                {
+                    // TODO: Log the exception - there was a problem attempting to create the ticket
+                }
             }
+
+            // return null because if the code has reached here then there must've been a problem within the try block above
+            return null;
         }
 
         #endregion

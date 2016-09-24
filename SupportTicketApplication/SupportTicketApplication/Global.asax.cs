@@ -64,7 +64,8 @@ namespace SupportTicketApplication
             Mapper.Initialize(config =>
             {
                config.CreateMap<Ticket, TicketIndexViewModel>().ReverseMap();
-               config.CreateMap<Ticket, TicketDetailViewModel>().ReverseMap();                
+               config.CreateMap<Ticket, TicketDetailViewModel>().ReverseMap();
+               config.CreateMap<Ticket, TicketCreateViewModel>().ReverseMap();
             });
 
             #endregion

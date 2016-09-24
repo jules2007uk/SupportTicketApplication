@@ -40,10 +40,19 @@ namespace SupportTicketApplication.Controllers
             // call the Ticket repository to retrieve list of Ticket
             IList<Ticket> tickets = ticketHelper.RetrieveAllTickets();
 
-            // convert the Tickets to the appropriate view models using Automapper
-            IList<TicketIndexViewModel> ticketsAsViewModels = Mapper.Map<IList<TicketIndexViewModel>>(tickets);
+            if(tickets != null)
+            {
+                // convert the Tickets to the appropriate view models using Automapper
+                IList<TicketIndexViewModel> ticketsAsViewModels = Mapper.Map<IList<TicketIndexViewModel>>(tickets);
 
-            return View(ticketsAsViewModels);
+                // return the tickets to the view
+                return View(ticketsAsViewModels);
+            }
+            else
+            {
+                // TODO: deal with the fact that no tickets were returned
+                return View();
+            }
         }
 
         // GET: Tickets/Details?ID={ID}
@@ -60,6 +69,60 @@ namespace SupportTicketApplication.Controllers
             return View(ticketAsViewModel);
         }
 
+        // GET: Tickets/Create
+        public ActionResult Create()
+        {            
+            return View();
+        }
+
+        // POST: Tickets/Create[TicketCreateViewModel]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "Title,Description,Priority")] TicketCreateViewModel incomingTicket)
+        {
+            // check that the incoming model is in a valid state
+            if (ModelState.IsValid)
+            {
+                // attempt conversion into Ticket
+                Ticket ticketToAdd = Mapper.Map<Ticket>(incomingTicket);                
+                TicketHelper ticketHelper = null;
+                Ticket addedTicket = null;
+
+                // populate the owner property of Ticket as this has a pre-determined value                
+                // TODO: Assign owner as logged in user
+                ticketToAdd.Owner = "Mr Hardcoded";
+
+                // instantiate the ticket helper
+                ticketHelper = new TicketHelper(c_repository);
+
+                // call method to add new ticket and assign created ticket to variable
+                addedTicket = ticketHelper.AddTicket(ticketToAdd);
+
+                if(addedTicket != null)
+                {
+                    // ticket added succesfully - insert info message into TempData so that message can be shown on tickets list view
+                    this.TempData["Success"] = "Ticket created succesfully.";
+
+                    // return user to the tickets list view
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    // ticket was not created because Ticket object returned by helper method was empty
+                    // issue an error to the model state to reflect this
+                    ModelState.AddModelError("", "Unable to create the ticket at this time. Please try again.");
+
+                    // return view
+                    return View(incomingTicket);
+                }                
+            }
+            else
+            {
+                // return back to the page
+                return View(incomingTicket);
+            }
+        }
+
         // GET: Tickets/Edit?ID={ID}
         public ActionResult Edit(int ID)
         {
@@ -74,10 +137,10 @@ namespace SupportTicketApplication.Controllers
             return View(ticketAsViewModel);
         }
 
-        // POST: Tickets/Edit?ID={5}
+        // POST: Tickets/Edit[TicketDetailViewModel] 
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public ActionResult EditPost([Bind(Include= "ID,Title,Description,Priority,DateCreated,Owner,Comments,Assignee,Status")] Ticket ticket)
+        public ActionResult EditPost([Bind(Include= "ID,Title,Description,Priority,DateCreated,Owner,Comments,Assignee,Status")] TicketDetailViewModel incomingTicket)
         {
             TicketDetailViewModel updatedTicketAsViewModel = null;
 
@@ -85,22 +148,40 @@ namespace SupportTicketApplication.Controllers
             if (ModelState.IsValid)
             {
                 TicketHelper ticketHelper = new TicketHelper(c_repository);
+                Ticket updatedTicket = null;
 
+                // convert the view model version of the ticket to Ticket type
                 // update the ticket and return the updated ticket
-                Ticket updatedTicket = ticketHelper.UpdateTicket(ticket);
+                updatedTicket = ticketHelper.UpdateTicket(Mapper.Map<Ticket>(incomingTicket));
 
-                // map Ticket to view model equivalent
-                updatedTicketAsViewModel = Mapper.Map<TicketDetailViewModel>(updatedTicket);
-            }
+                if(updatedTicket != null)
+                {
+                    // map Ticket to view model equivalent
+                    updatedTicketAsViewModel = Mapper.Map<TicketDetailViewModel>(updatedTicket);
 
-            if(updatedTicketAsViewModel != null)
-            {
-                return View(updatedTicketAsViewModel);
+                    // ticket updated succesfully - insert info message into TempData so that message can be shown on tickets list view
+                    this.TempData["Success"] = "Ticket updated succesfully.";
+
+                    // return the ticket that was updated to the view
+                    return View(updatedTicketAsViewModel);
+                }
+                else
+                {
+                    // add model error to model state as we were unable to update the ticket
+                    // this will display a message in the ValidationSummary label within the Edit view
+                    ModelState.AddModelError("", "Unable to update the ticket at this time. Please try again.");                    
+
+                    // return view
+                    return View(incomingTicket);
+                }
             }
             else
             {
-                // redirect to error view
+                // model wasn't valid, reload same view
+                return View(incomingTicket);
             }
+
+            
         }
 
         #endregion

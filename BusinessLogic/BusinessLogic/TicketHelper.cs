@@ -41,7 +41,8 @@ namespace BusinessLogic
         /// <summary>
         /// Retrieves all tickets from the repository supplied in the constructor.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>IList of all tickets found in the repository in order of date created.
+        /// Returns null if no tickets are found.</returns>
         public IList<Ticket> RetrieveAllTickets()
         {
             // fetch all tickets from the repository supplied in the constructor method and return them
@@ -52,7 +53,8 @@ namespace BusinessLogic
         /// Retrieves specific ticket from the repository supplied in the constructor.
         /// </summary>
         /// <param name="ticketId"></param>
-        /// <returns></returns>
+        /// <returns>Returns Ticket with the ticket ID supplied.
+        /// Returns null if no ticket was found with the ID supplied.</returns>
         public Ticket RetrieveTicket(int ticketId)
         {
             // fetch ticket for ticket ID supplied
@@ -62,11 +64,23 @@ namespace BusinessLogic
         /// <summary>
         /// Saves the ticket supplied to the repository supplied in the constructor.
         /// </summary>
-        /// <param name="ticket"></param>
-        /// <returns>Returns the updated ticket.</returns>
+        /// <param name="ticket">The new version of the ticket which needs updating.</param>
+        /// <returns>Returns the updated ticket.
+        /// Returns null if the ticket to update was not found.</returns>
         public Ticket UpdateTicket(Ticket ticket)
         {
             return c_repository.UpdateTicket(ticket);
+        }
+
+        /// <summary>
+        /// Adds the ticket supplied to the repository supplied in the constructor.
+        /// </summary>
+        /// <param name="ticket">The new ticket to add.</param>
+        /// <returns>Returns the created ticket.
+        /// Returns null if the ticket was not created.</returns>
+        public Ticket AddTicket(Ticket ticket)
+        {
+            return c_repository.AddTicket(ticket);
         }
 
         #endregion

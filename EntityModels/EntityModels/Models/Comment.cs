@@ -43,6 +43,7 @@ namespace EntityModels
         /// <summary>
         /// Ticket to which the comment belongs.
         /// </summary>
+        // TODO: Set FK constraint
         public int TicketID { get; set; }
 
         #endregion

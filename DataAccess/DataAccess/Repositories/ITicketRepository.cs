@@ -34,6 +34,13 @@ namespace DataAccess.Repositories
         /// <returns>Returns the updated ticket.</returns>
         Ticket UpdateTicket(Ticket ticket);
 
+        /// <summary>
+        /// Adds a new Ticket.
+        /// </summary>
+        /// <param name="ticket">The ticket to add.</param>
+        /// <returns>The added ticket.</returns>
+        Ticket AddTicket(Ticket ticket);
+
         #endregion
     }
 }
