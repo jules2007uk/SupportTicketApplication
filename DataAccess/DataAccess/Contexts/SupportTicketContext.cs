@@ -37,6 +37,6 @@ namespace DataAccess.Contexts
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
 
-        #endregion
+        #endregion        
     }
 }

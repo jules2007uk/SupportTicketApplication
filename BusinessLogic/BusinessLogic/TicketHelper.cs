@@ -83,6 +83,16 @@ namespace BusinessLogic
             return c_repository.AddTicket(ticket);
         }
 
+        /// <summary>
+        /// Removes the ticket from the respotiory supplied in the constructor.
+        /// </summary>
+        /// <param name="ticketId">The ticket ID of the ticket to remove.</param>
+        /// <returns>Returns true for success, false for failure.</returns>
+        public bool DoRemoveTicket(int ticketId)
+        {
+            return c_repository.DoRemoveTicket(ticketId);
+        }
+
         #endregion
     }
 }

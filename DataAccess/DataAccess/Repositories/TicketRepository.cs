@@ -170,6 +170,47 @@ namespace DataAccess.Repositories
             return null;
         }
 
+        /// <summary>
+        /// Removes a Ticket.
+        /// </summary>
+        /// <param name="ticketId">The ID of the ticket to remove.</param>
+        /// <returns>Returns true if ticket was removed, or false if it wasn't.</returns>
+        public bool DoRemoveTicket(int ticketId)
+        {
+            // return flag to denote whether the remove action took place OK
+            bool wasRemoved = false;
+
+            // check parameter supplied - the ticket ID must be a number above 0
+            if (ticketId > 0)
+            {
+                try
+                {
+                    // attempt to find a ticket matching the ID supplied
+                    Ticket ticketToRemove = c_context.Tickets.Find(ticketId);
+
+                    // was a matching ticket found?
+                    if (ticketToRemove != null)
+                    {
+                        // try the remove
+                        c_context.Tickets.Remove(ticketToRemove);
+
+                        // save the context changes
+                        c_context.SaveChanges();
+
+                        // set flag for successful removal of ticket
+                        wasRemoved = true;
+                    }
+                }
+                catch(Exception ex)
+                {
+                    // TODO: Log the exception - there was a problem attempting to delete the ticket
+                }
+            }
+
+            // return success or failure
+            return wasRemoved;
+        }
+
         #endregion
     }
 }

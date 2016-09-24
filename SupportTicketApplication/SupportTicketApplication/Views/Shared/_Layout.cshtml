@@ -38,14 +38,24 @@
     <div class="container body-content">
 
         @* Success message box *@
-        <div class="col-md-12">
-            @if (TempData["Success"] != null)
-            {
-                <div class="alert alert-success fade in" style="margin-top:18px;">
+        @if (TempData["Success"] != null)
+        {
+            <div class="col-md-12">
+                <div class="alert alert-success fade in">
                     <strong>Success!</strong> @TempData["Success"].ToString()
                 </div>
-            }
-        </div>
+            </div>
+        }
+
+        @* Success message box *@
+        @if (TempData["Failure"] != null)
+        {
+            <div class="col-md-12">
+                <div class="alert alert-danger fade in">
+                    <strong>Error!</strong> @TempData["Failure"].ToString()
+                </div>
+            </div>
+        }
 
         @RenderBody()
         <hr />

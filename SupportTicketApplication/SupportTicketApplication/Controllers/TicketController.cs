@@ -50,7 +50,7 @@ namespace SupportTicketApplication.Controllers
             }
             else
             {
-                // TODO: deal with the fact that no tickets were returned
+                // return view with no bound model as no model to attach
                 return View();
             }
         }
@@ -63,10 +63,18 @@ namespace SupportTicketApplication.Controllers
             // retrieve ticket
             Ticket ticket = ticketHelper.RetrieveTicket(ID);
 
-            // convert the Ticket to the appropriate view model using Automapper
-            TicketDetailViewModel ticketAsViewModel = Mapper.Map<TicketDetailViewModel>(ticket);
+            if(ticket != null)
+            {
+                // convert the Ticket to the appropriate view model using Automapper
+                TicketDetailViewModel ticketAsViewModel = Mapper.Map<TicketDetailViewModel>(ticket);
             
-            return View(ticketAsViewModel);
+                return View(ticketAsViewModel);
+            }
+            else
+            {
+                // return http not found because Ticket could not be found
+                return HttpNotFound();
+            }
         }
 
         // GET: Tickets/Create
@@ -126,15 +134,31 @@ namespace SupportTicketApplication.Controllers
         // GET: Tickets/Edit?ID={ID}
         public ActionResult Edit(int ID)
         {
-            TicketHelper ticketHelper = new TicketHelper(c_repository);
+            // check that ID was supplied
+            if(ID != 0)
+            {
+                TicketHelper ticketHelper = new TicketHelper(c_repository);
 
-            // retrieve ticket
-            Ticket ticket = ticketHelper.RetrieveTicket(ID);
+                // retrieve ticket
+                Ticket ticket = ticketHelper.RetrieveTicket(ID);
 
-            // convert the Ticket to the appropriate view model using Automapper
-            TicketDetailViewModel ticketAsViewModel = Mapper.Map<TicketDetailViewModel>(ticket);
+                if (ticket != null)
+                {
+                    // convert the Ticket to the appropriate view model using Automapper
+                    TicketDetailViewModel ticketAsViewModel = Mapper.Map<TicketDetailViewModel>(ticket);
 
-            return View(ticketAsViewModel);
+                    return View(ticketAsViewModel);
+                }
+                else
+                {
+                    // return not found error because ticket could not be found
+                    return HttpNotFound();
+                }
+            }
+            {
+                // no ticket ID supplied, return bad request error
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "No ticket ID was supplied.");
+            }      
         }
 
         // POST: Tickets/Edit[TicketDetailViewModel] 
@@ -180,8 +204,72 @@ namespace SupportTicketApplication.Controllers
                 // model wasn't valid, reload same view
                 return View(incomingTicket);
             }
+        }
 
-            
+        // GET: Tickets/Delete/{ID}
+        public ActionResult Delete(int ID)
+        {
+            // check the ticket ID supplied
+            if (ID != 0)
+            {
+                TicketHelper ticketHelper = new TicketHelper(c_repository);
+
+                // retrieve the Ticket matching the id supplied
+                Ticket ticketToDelete = ticketHelper.RetrieveTicket(ID);
+
+                // was the ticket found?
+                if(ticketToDelete != null)
+                {
+                    // map the Ticket object to the appropriate view model for return
+                    // return the view with the Ticket to delete as the model
+                    return View(Mapper.Map<TicketDetailViewModel>(ticketToDelete));
+                }
+                else
+                {
+                    // no matching ticket found, return http not found error
+                    return HttpNotFound();
+                }                            
+            }
+            else
+            {
+                // no ticket ID supplied, return bad request error
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "No ticket ID was supplied.");
+            }            
+        }
+
+        // POST: Tickets/Delete/{ID}
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeletePost(int ID)
+        {
+            // check the ticket ID supplied
+            if (ID != 0)
+            {
+                TicketHelper ticketHelper = new TicketHelper(c_repository);
+
+                // try the Ticket delete
+                if (ticketHelper.DoRemoveTicket(ID))
+                {
+                    // ticket was deleted so add message to TempData
+                    this.TempData["Success"] = "Ticket deleted succesfully.";
+
+                    // redirect to tickets list view
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    // ticket was not deleted so add message to TempData
+                    this.TempData["Failure"] = "Ticket was not able to be deleted at this time. Please try again later.";
+
+                    // redirect to tickets list view
+                    return RedirectToAction("Index");
+                }              
+            }
+            else
+            {
+                // no ticket ID supplied, return bad request error
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "No ticket ID was supplied.");
+            }               
         }
 
         #endregion
