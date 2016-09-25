@@ -12,7 +12,7 @@ namespace EntityModels.Models.Enums
     public enum TicketStatus
     {
         Pending,
-        InProgress,
+        Active,
         Closed
     }
 }

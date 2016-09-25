@@ -12,6 +12,10 @@ using System.Web.Mvc;
 
 namespace SupportTicketApplication.Controllers
 {
+    /// <summary>
+    /// Tickets controller, which requires users to be authorised (e.g. logged in) in order to use.
+    /// </summary>
+    [Authorize]
     public class TicketController : Controller
     {
         #region Class level variables

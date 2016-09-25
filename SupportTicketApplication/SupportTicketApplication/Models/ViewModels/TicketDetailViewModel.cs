@@ -47,6 +47,7 @@ namespace SupportTicketApplication.Models.ViewModels
         /// </summary>      
         [Required]
         [DataType(DataType.Date)]
+        [Display(Name = "Date created")]
         public DateTime DateCreated { get; set; }
 
         //TODO: Use correct variable type once Identity Framework has been implemented

@@ -6,5 +6,12 @@
 
 <div class="jumbotron">
     <h1>SupportTicketApplication</h1>
-    <p class="lead">Welcome to SupportTicketApplication.</p>    
+    @if (Context.User.Identity.IsAuthenticated)
+    {
+        <p class="lead">Welcome to SupportTicketApplication!</p>
+    }
+    else
+    {
+        <p class="lead">In order to view tickets you must be logged in. Please log in using the @Html.ActionLink("log in", "Login", "Account") form.</p>
+    }    
 </div>

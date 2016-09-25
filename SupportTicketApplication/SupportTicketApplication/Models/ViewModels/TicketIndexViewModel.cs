@@ -3,6 +3,7 @@ using EntityModels.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -33,6 +34,7 @@ namespace SupportTicketApplication.Models.ViewModels
         /// <summary>
         /// Date ticket was created.
         /// </summary>
+        [Display(Name = "Date created")]
         public DateTime DateCreated { get; set; }
 
         //TODO: Use correct variable type once Identity Framework has been implemented
