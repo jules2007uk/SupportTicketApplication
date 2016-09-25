@@ -1,4 +1,4 @@
-﻿using EntityModels.Models.Enums;
+﻿using EntityModels.Enums;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EntityModels.Models.Enums
+namespace EntityModels.Enums
 {
     /// <summary>
     /// The status of a ticket.

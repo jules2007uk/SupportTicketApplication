@@ -1,7 +1,7 @@
 namespace DataAccess.Migrations
 {
     using EntityModels;
-    using EntityModels.Models.Enums;
+    using EntityModels.Enums;
     using System;
     using System.Collections.ObjectModel;
     using System.Data.Entity;
