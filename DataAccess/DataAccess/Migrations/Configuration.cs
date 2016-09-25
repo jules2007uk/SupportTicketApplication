@@ -32,16 +32,17 @@ namespace DataAccess.Migrations
             testComment.Text = "This is my test comment";
             testComment.TicketID = 1;
 
-            // this is an attempt to add the comments to the Ticket.
-            // but it's not working at the min
+            // comments to add to the 1st Ticket
             Collection<Comment> comments = new Collection<Comment>();
             comments.Add(testComment);
 
+            // add the tickets
             context.Tickets.AddOrUpdate(                
-                new Ticket { ID = 1, Assignee = "Julian", Comments = comments, DateCreated = DateTime.Now, Description = "My monitor is showing a strange black line.", Owner = "Harold", Priority = TicketPriority.Medium, Status = TicketStatus.Pending, Title = "Monitor issue" },
-                new Ticket { ID = 2, Assignee = "Julian", Comments = null, DateCreated = DateTime.Now, Description = "My mouse isn't moving the cursor on the screen.", Owner = "Emily", Priority = TicketPriority.Medium, Status = TicketStatus.Pending, Title = "Mouse issue" }
+                new Ticket { ID = 1, Comments = comments, DateCreated = DateTime.Now, Description = "My monitor is showing a strange black line.", Owner = "Harold", Priority = TicketPriority.Medium, Status = TicketStatus.Pending, Title = "Monitor issue" },
+                new Ticket { ID = 2, Comments = null, DateCreated = DateTime.Now, Description = "My mouse isn't moving the cursor on the screen.", Owner = "Emily", Priority = TicketPriority.Medium, Status = TicketStatus.Pending, Title = "Mouse issue" }
             );
 
+            // add the comments
             context.Comments.AddOrUpdate(
                 testComment
             );

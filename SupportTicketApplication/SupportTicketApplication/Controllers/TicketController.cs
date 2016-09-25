@@ -2,6 +2,8 @@
 using BusinessLogic;
 using DataAccess.Repositories;
 using EntityModels;
+using Microsoft.AspNet.Identity.Owin;
+using SupportTicketApplication.App_Start;
 using SupportTicketApplication.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -47,7 +49,7 @@ namespace SupportTicketApplication.Controllers
             if(tickets != null)
             {
                 // convert the Tickets to the appropriate view models using Automapper
-                IList<TicketIndexViewModel> ticketsAsViewModels = Mapper.Map<IList<TicketIndexViewModel>>(tickets);
+                IList<TicketIndexViewModel> ticketsAsViewModels = Mapper.Map<IList<TicketIndexViewModel>>(tickets);                
 
                 // return the tickets to the view
                 return View(ticketsAsViewModels);
@@ -100,9 +102,8 @@ namespace SupportTicketApplication.Controllers
                 TicketHelper ticketHelper = null;
                 Ticket addedTicket = null;
 
-                // populate the owner property of Ticket as this has a pre-determined value                
-                // TODO: Assign owner as logged in user
-                ticketToAdd.Owner = "Mr Hardcoded";
+                // get the user name of the logged in user and assign as the Ticket owner
+                ticketToAdd.Owner = User.Identity.Name;
 
                 // instantiate the ticket helper
                 ticketHelper = new TicketHelper(c_repository);

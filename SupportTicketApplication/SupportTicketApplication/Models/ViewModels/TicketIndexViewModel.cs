@@ -37,11 +37,10 @@ namespace SupportTicketApplication.Models.ViewModels
         [Display(Name = "Date created")]
         public DateTime DateCreated { get; set; }
 
-        //TODO: Use correct variable type once Identity Framework has been implemented
+        /// <summary>
+        /// Ticket owner's username.
+        /// </summary>        
         public string Owner { get; set; }
-
-        //TODO: Use correct variable type once Identity Framework has been implemented
-        public string Assignee { get; set; }
 
         /// <summary>
         /// Status of the ticket.
@@ -61,8 +60,7 @@ namespace SupportTicketApplication.Models.ViewModels
             this.Title = string.Empty;            
             this.Priority = new TicketPriority();
             this.DateCreated = new DateTime();
-            this.Owner = string.Empty;            
-            this.Assignee = string.Empty;
+            this.Owner = string.Empty;
             this.Status = new TicketStatus();
         }
 

@@ -49,17 +49,16 @@ namespace EntityModels
         [DataType(DataType.Date)]
         public DateTime DateCreated { get; set; }
 
-        //TODO: Use correct variable type once Identity Framework has been implemented
+        /// <summary>
+        /// Ticket owner.
+        /// </summary>
         [Required]
         public string Owner { get; set; }
 
         /// <summary>
         /// Comments made against the ticket.
         /// </summary>
-        public ICollection<Comment> Comments { get; set; }
-
-        //TODO: Use correct variable type once Identity Framework has been implemented
-        public string Assignee { get; set; }
+        public ICollection<Comment> Comments { get; set; }        
 
         /// <summary>
         /// Status of the ticket.
@@ -82,8 +81,7 @@ namespace EntityModels
             this.Priority = new TicketPriority();
             this.DateCreated = DateTime.Now;
             this.Owner = string.Empty;
-            this.Comments = new Collection<Comment>();
-            this.Assignee = string.Empty;
+            this.Comments = new Collection<Comment>();            
             this.Status = TicketStatus.Pending;
         }
 

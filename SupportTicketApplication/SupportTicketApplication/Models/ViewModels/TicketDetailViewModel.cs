@@ -50,8 +50,10 @@ namespace SupportTicketApplication.Models.ViewModels
         [Display(Name = "Date created")]
         public DateTime DateCreated { get; set; }
 
-        //TODO: Use correct variable type once Identity Framework has been implemented
-        [Required]
+        /// <summary>
+        /// Ticket owner.
+        /// </summary>
+        [Required]        
         public string Owner { get; set; }
 
         /// <summary>

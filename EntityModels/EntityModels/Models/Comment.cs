@@ -37,7 +37,6 @@ namespace EntityModels
         /// <summary>
         /// The owner of the comment.
         /// </summary>
-        //TODO: Use correct variable type once Identity Framework has been implemented
         public string Owner { get; set; }
 
         /// <summary>

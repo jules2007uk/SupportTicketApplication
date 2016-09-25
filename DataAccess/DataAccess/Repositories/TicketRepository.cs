@@ -113,8 +113,7 @@ namespace DataAccess.Repositories
                     try
                     {
                         // map the updatable properties to the object to update
-                        // (this mapping could probably be done more elegantly)
-                        ticketToUpdate.Assignee = ticket.Assignee;
+                        // (this mapping could probably be done more elegantly)                        
                         ticketToUpdate.Description = ticket.Description;
                         ticketToUpdate.Priority = ticket.Priority;
                         ticketToUpdate.Status = ticket.Status;
