@@ -21,12 +21,12 @@ namespace DataAccess.Migrations
         /// </summary>
         /// <param name="context"></param>
         /// <remarks>This method will be called after migrating to the latest version</remarks>
-        protected override void Seed(DataAccess.Contexts.SupportTicketContext context)
+        protected override void Seed(Contexts.SupportTicketContext context)
         {
             // add the tickets
             context.Tickets.AddOrUpdate(                
-                new Ticket { ID = 1, DateCreated = DateTime.Now, Description = "My monitor is showing a strange black line.", Owner = "Harold", Priority = TicketPriority.Medium, Status = TicketStatus.Pending, Title = "Monitor issue" },
-                new Ticket { ID = 2, DateCreated = DateTime.Now, Description = "My mouse isn't moving the cursor on the screen.", Owner = "Emily", Priority = TicketPriority.Medium, Status = TicketStatus.Pending, Title = "Mouse issue" }
+                new Ticket { ID = 1, DateCreated = DateTime.Now, Description = "My monitor is showing a strange black line.", Owner = "testuser1@email.com", Priority = TicketPriority.Medium, Status = TicketStatus.Pending, Title = "Monitor issue" },
+                new Ticket { ID = 2, DateCreated = DateTime.Now, Description = "My mouse isn't moving the cursor on the screen.", Owner = "testuser1@email.com", Priority = TicketPriority.Medium, Status = TicketStatus.Pending, Title = "Mouse issue" }
             ); 
         }
     }
