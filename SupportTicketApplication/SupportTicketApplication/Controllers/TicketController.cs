@@ -37,7 +37,7 @@ namespace SupportTicketApplication.Controllers
 
         #region Actions
 
-        // GET: Tickets
+        // GET: Tickets        
         public ActionResult Index()
         {
             // new instance of the Ticket Helper service
@@ -147,18 +147,28 @@ namespace SupportTicketApplication.Controllers
                 // retrieve ticket
                 Ticket ticket = ticketHelper.RetrieveTicket(ID);
 
-                if (ticket != null)
+                // check that the user is either an Admin, or owns the ticket.
+                // if they are neither then we're not continuing with the edit because they don't have permission
+                if(User.IsInRole("Admin") || ticket.Owner == User.Identity.Name)
                 {
-                    // convert the Ticket to the appropriate view model using Automapper
-                    TicketDetailViewModel ticketAsViewModel = Mapper.Map<TicketDetailViewModel>(ticket);
+                    if (ticket != null)
+                    {
+                        // convert the Ticket to the appropriate view model using Automapper
+                        TicketDetailViewModel ticketAsViewModel = Mapper.Map<TicketDetailViewModel>(ticket);
 
-                    return View(ticketAsViewModel);
+                        return View(ticketAsViewModel);
+                    }
+                    else
+                    {
+                        // return not found error because ticket could not be found
+                        return HttpNotFound();
+                    }
                 }
                 else
                 {
-                    // return not found error because ticket could not be found
-                    return HttpNotFound();
-                }
+                    // user does not have permission to edit this ticket
+                    return new HttpUnauthorizedResult("The user does not have permission to perform this action.");
+                }                
             }
             {
                 // no ticket ID supplied, return bad request error
@@ -169,7 +179,7 @@ namespace SupportTicketApplication.Controllers
         // POST: Tickets/Edit[TicketDetailViewModel] 
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public ActionResult EditPost([Bind(Include= "ID,Title,Description,Priority,DateCreated,Owner,Comments,Assignee,Status")] TicketDetailViewModel incomingTicket)
+        public ActionResult EditPost([Bind(Include="ID,Title,Description,Priority,DateCreated,Owner,Comments,Assignee,Status")] TicketDetailViewModel incomingTicket)
         {
             TicketDetailViewModel updatedTicketAsViewModel = null;
 
@@ -212,6 +222,7 @@ namespace SupportTicketApplication.Controllers
         }
 
         // GET: Tickets/Delete/{ID}
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int ID)
         {
             // check the ticket ID supplied
@@ -243,6 +254,7 @@ namespace SupportTicketApplication.Controllers
         }
 
         // POST: Tickets/Delete/{ID}
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeletePost(int ID)

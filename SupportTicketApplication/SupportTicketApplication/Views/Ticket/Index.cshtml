@@ -58,9 +58,18 @@
                         @Html.DisplayFor(modelItem => item.Status)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                        @if (User.IsInRole("Admin") || User.Identity.Name == item.Owner)
+                        {
+                            <span>@Html.ActionLink("Edit", "Edit", new { id = item.ID }) |</span>
+                        }
+                        
+                        @Html.ActionLink("Details", "Details", new { id = item.ID })
+
+                        @* Only Admin users allowed to delete tickets, so only show link to Delete page for Admin users. *@
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <span>| @Html.ActionLink("Delete", "Delete", new { id = item.ID })</span>
+                        }
                     </td>
                 </tr>
             }

@@ -10,7 +10,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -19,54 +19,94 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+
+                @* If logged in user is an Admin, or they own the ticket, then give them edit controls for the Title *@
+                @if (User.IsInRole("Admin") || User.Identity.Name == Model.Owner)
+                {
+                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                }
+                else
+                {
+                    @Html.DisplayFor(model => model.Title)
+                }
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+
+                @* If logged in user is an Admin, or they own the ticket, then give them edit controls for the Title *@
+                @if (User.IsInRole("Admin") || User.Identity.Name == Model.Owner)
+                {
+                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                }
+                else
+                {
+                    @Html.DisplayFor(model => model.Description)
+                }
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Priority, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.Priority, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Priority, "", new { @class = "text-danger" })
+
+                @* Only allow Admin users ability to change priority on existing tickets *@
+                @if (User.IsInRole("Admin"))
+                {
+                    @Html.EnumDropDownListFor(model => model.Priority, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Priority, "", new { @class = "text-danger" })
+                }
+                else
+                {
+                    @Html.DisplayFor(model => model.Priority)
+                }
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.DateCreated, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DisplayFor(model => model.DateCreated)               
+                @Html.DisplayFor(model => model.DateCreated)
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Owner, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DisplayFor(model => model.Owner, new { htmlAttributes = new { @class = "form-control" } })                
+                @Html.DisplayFor(model => model.Owner, new { htmlAttributes = new { @class = "form-control" } })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.Status, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+
+                @* Only allow Admin users ability to change status on existing tickets *@
+                @if (User.IsInRole("Admin"))
+                {
+                    @Html.EnumDropDownListFor(model => model.Status, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                }
+                else
+                {
+                    @Html.DisplayFor(model => model.Status)
+                }
             </div>
         </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-success" />
+        @* If logged in user is an Admin, or they own the ticket, then give them the save button *@
+        @if (User.IsInRole("Admin") || User.Identity.Name == Model.Owner)
+        {
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-success" />
+                </div>
             </div>
-        </div>
+        }        
     </div>
 }
 
