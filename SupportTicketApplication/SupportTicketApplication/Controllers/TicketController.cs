@@ -179,7 +179,7 @@ namespace SupportTicketApplication.Controllers
         // POST: Tickets/Edit[TicketDetailViewModel] 
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public ActionResult EditPost([Bind(Include="ID,Title,Description,Priority,DateCreated,Owner,Comments,Assignee,Status")] TicketDetailViewModel incomingTicket)
+        public ActionResult EditPost([Bind(Include = "ID,Title,Description,Priority,DateCreated,Owner,Status")] TicketDetailViewModel incomingTicket)
         {
             TicketDetailViewModel updatedTicketAsViewModel = null;
 
@@ -262,7 +262,7 @@ namespace SupportTicketApplication.Controllers
             // check the ticket ID supplied
             if (ID != 0)
             {
-                TicketHelper ticketHelper = new TicketHelper(c_repository);
+                TicketHelper ticketHelper = new TicketHelper(c_repository);                
 
                 // try the Ticket delete
                 if (ticketHelper.DoRemoveTicket(ID))

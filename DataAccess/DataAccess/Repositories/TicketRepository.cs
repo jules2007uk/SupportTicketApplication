@@ -45,8 +45,8 @@ namespace DataAccess.Repositories
 
             try
             {
-                // retrieve all tickets and their associated comments using eager loading
-                tickets = c_context.Tickets.Include("Comments").OrderBy(x => x.DateCreated).ToList<Ticket>();
+                // retrieve all tickets
+                tickets = c_context.Tickets.OrderBy(x => x.DateCreated).ToList<Ticket>();
             }
             catch(Exception ex)
             {

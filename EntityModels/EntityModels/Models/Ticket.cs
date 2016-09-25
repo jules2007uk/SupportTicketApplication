@@ -53,12 +53,7 @@ namespace EntityModels
         /// Ticket owner.
         /// </summary>
         [Required]
-        public string Owner { get; set; }
-
-        /// <summary>
-        /// Comments made against the ticket.
-        /// </summary>
-        public ICollection<Comment> Comments { get; set; }        
+        public string Owner { get; set; }            
 
         /// <summary>
         /// Status of the ticket.
@@ -80,8 +75,7 @@ namespace EntityModels
             this.Description = string.Empty;
             this.Priority = new TicketPriority();
             this.DateCreated = DateTime.Now;
-            this.Owner = string.Empty;
-            this.Comments = new Collection<Comment>();            
+            this.Owner = string.Empty;                        
             this.Status = TicketStatus.Pending;
         }
 

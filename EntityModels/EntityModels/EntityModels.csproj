@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Enums\TicketPriority.cs" />
     <Compile Include="Models\Enums\TicketStatus.cs" />
     <Compile Include="Models\Ticket.cs" />
