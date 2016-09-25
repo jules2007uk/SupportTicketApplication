@@ -180,38 +180,46 @@ namespace SupportTicketApplication.Controllers
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
         public ActionResult EditPost([Bind(Include = "ID,Title,Description,Priority,DateCreated,Owner,Status")] TicketDetailViewModel incomingTicket)
-        {
-            TicketDetailViewModel updatedTicketAsViewModel = null;
-
+        {            
             // ensure the model state is valid before updating the model
             if (ModelState.IsValid)
             {
                 TicketHelper ticketHelper = new TicketHelper(c_repository);
-                Ticket updatedTicket = null;
+                
+                // fetch ticket to update
+                Ticket ticketToUpdate = ticketHelper.RetrieveTicket(incomingTicket.ID);
 
-                // convert the view model version of the ticket to Ticket type
-                // update the ticket and return the updated ticket
-                updatedTicket = ticketHelper.UpdateTicket(Mapper.Map<Ticket>(incomingTicket));
-
-                if(updatedTicket != null)
+                if(ticketToUpdate != null)
                 {
-                    // map Ticket to view model equivalent
-                    updatedTicketAsViewModel = Mapper.Map<TicketDetailViewModel>(updatedTicket);
+                    // map the updatable properties supplied back via parameter to the loaded Ticket
+                    // (this mapping could probably be done more elegantly, perhaps with AutoMapper)                        
+                    ticketToUpdate.Description = incomingTicket.Description;
+                    ticketToUpdate.Priority = incomingTicket.Priority;
+                    ticketToUpdate.Status = incomingTicket.Status;
+                    ticketToUpdate.Title = incomingTicket.Title;
+                    
+                    // try and update the ticket, did it go ok?
+                    if (ticketHelper.DoUpdateTicket(ticketToUpdate))
+                    {                        
+                        // ticket updated succesfully - insert info message into TempData so that message can be shown on tickets list view
+                        this.TempData["Success"] = "Ticket updated succesfully.";
 
-                    // ticket updated succesfully - insert info message into TempData so that message can be shown on tickets list view
-                    this.TempData["Success"] = "Ticket updated succesfully.";
+                        // return the ticket that was updated to the view
+                        return View(incomingTicket);
+                    }
+                    else
+                    {
+                        // add model error to model state as we were unable to update the ticket
+                        // this will display a message in the ValidationSummary label within the Edit view
+                        ModelState.AddModelError("", "Unable to update the ticket at this time. Please try again.");
 
-                    // return the ticket that was updated to the view
-                    return View(updatedTicketAsViewModel);
+                        // return view
+                        return View(incomingTicket);
+                    }
                 }
                 else
                 {
-                    // add model error to model state as we were unable to update the ticket
-                    // this will display a message in the ValidationSummary label within the Edit view
-                    ModelState.AddModelError("", "Unable to update the ticket at this time. Please try again.");                    
-
-                    // return view
-                    return View(incomingTicket);
+                    return new HttpNotFoundResult("The ticket could not be updated, because the ticket could not be found.");
                 }
             }
             else
@@ -262,31 +270,41 @@ namespace SupportTicketApplication.Controllers
             // check the ticket ID supplied
             if (ID != 0)
             {
-                TicketHelper ticketHelper = new TicketHelper(c_repository);                
+                TicketHelper ticketHelper = new TicketHelper(c_repository);
 
-                // try the Ticket delete
-                if (ticketHelper.DoRemoveTicket(ID))
+                // retrieve the ticket to delete
+                Ticket ticketToDelete = ticketHelper.RetrieveTicket(ID);
+
+                if(ticketToDelete != null)
                 {
-                    // ticket was deleted so add message to TempData
-                    this.TempData["Success"] = "Ticket deleted succesfully.";
+                    // try the Ticket delete
+                    if (ticketHelper.DoRemoveTicket(ticketToDelete))
+                    {
+                        // ticket was deleted so add message to TempData
+                        this.TempData["Success"] = "Ticket deleted succesfully.";
 
-                    // redirect to tickets list view
-                    return RedirectToAction("Index");
+                        // redirect to tickets list view
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        // ticket was not deleted so add message to TempData
+                        this.TempData["Failure"] = "Ticket was not able to be deleted at this time. Please try again later.";
+
+                        // redirect to tickets list view
+                        return RedirectToAction("Index");
+                    }
                 }
                 else
                 {
-                    // ticket was not deleted so add message to TempData
-                    this.TempData["Failure"] = "Ticket was not able to be deleted at this time. Please try again later.";
-
-                    // redirect to tickets list view
-                    return RedirectToAction("Index");
-                }              
+                    return new HttpNotFoundResult("The ticket could not be found, and therefore could not be deleted.");
+                }
             }
             else
             {
                 // no ticket ID supplied, return bad request error
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "No ticket ID was supplied.");
-            }               
+            }
         }
 
         #endregion

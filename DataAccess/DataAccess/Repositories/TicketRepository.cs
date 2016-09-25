@@ -2,6 +2,7 @@
 using EntityModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,18 +40,19 @@ namespace DataAccess.Repositories
         /// </summary>
         /// <returns>IList of all tickets found in the repository in order of date created.
         /// Returns null if no tickets are found.</returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public IList<Ticket> RetrieveAllTickets()
         {
             IList<Ticket> tickets = null;
 
             try
             {
-                // retrieve all tickets
+                // retrieve all tickets                
                 tickets = c_context.Tickets.OrderBy(x => x.DateCreated).ToList<Ticket>();
             }
-            catch(Exception ex)
+            catch(ArgumentNullException ex)
             {
-                // TODO: Log the exception                
+                throw;              
             }
 
             // finally return the tickets object
@@ -63,6 +65,7 @@ namespace DataAccess.Repositories
         /// <param name="ticketId">The ID of the ticket to retrieve.</param>
         /// <returns>Returns Ticket with the ticket ID supplied.
         /// Returns null if no ticket was found with the ID supplied.</returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public Ticket RetrieveTicket(int ticketId)
         {
             Ticket ticket = null;
@@ -75,9 +78,9 @@ namespace DataAccess.Repositories
                     // retrieve ticket for ID supplied
                     ticket = c_context.Tickets.FirstOrDefault<Ticket>(t => t.ID == ticketId);
                 }
-                catch (Exception ex)
+                catch (ArgumentNullException ex)
                 {
-                    // TODO: Log the exception
+                    throw;
                 }
             }
 
@@ -89,51 +92,32 @@ namespace DataAccess.Repositories
         /// Updates the ticket supplied.
         /// </summary>
         /// <param name="ticket">The ticket to save.</param>
-        /// <returns>Returns the updated ticket.
-        /// Returns null if the ticket to update was not found.</returns>
-        public Ticket UpdateTicket(Ticket ticket)
+        /// <returns>Returns true if ticket updated OK, false if not.</returns>        
+        /// <exception cref="Exception"></exception>
+        public bool DoUpdateTicket(Ticket ticket)
         {
-            Ticket ticketToUpdate = null;
-
+            bool wasUpdated = false;
+                    
             // check the ticket passed via parameter
             if(ticket != null)
-            {
+            {  
                 try
                 {
-                    // retrieve the existing ticket from the db
-                    ticketToUpdate = c_context.Tickets.Find(ticket.ID);
+                    // set the ticket entity to state modified                
+                    c_context.Entry(ticket).State = EntityState.Modified;
+
+                    // save the change
+                    c_context.SaveChanges();
+
+                    wasUpdated = true;
                 }
                 catch (Exception ex)
                 {
-                    // TODO: Log the exception - there was a problem whilst trying to retrieve the ticket
-                }
-
-                if (ticketToUpdate != null)
-                {
-                    try
-                    {
-                        // map the updatable properties to the object to update
-                        // (this mapping could probably be done more elegantly)                        
-                        ticketToUpdate.Description = ticket.Description;
-                        ticketToUpdate.Priority = ticket.Priority;
-                        ticketToUpdate.Status = ticket.Status;
-                        ticketToUpdate.Title = ticket.Title;
-
-                        // set the ticket entity to state modified                
-                        c_context.Entry(ticketToUpdate).State = System.Data.Entity.EntityState.Modified;
-
-                        // save the change
-                        c_context.SaveChanges();
-                    }
-                    catch (Exception ex)
-                    {
-                        // TODO: Log the exception - there was a problem attempting to update the existing Ticket entity
-                    }
+                    throw;
                 }
             }
 
-            // hopefully return the updated ticket
-            return ticketToUpdate;
+            return wasUpdated;
         }
 
         /// <summary>
@@ -161,7 +145,7 @@ namespace DataAccess.Repositories
                 }
                 catch (Exception ex)
                 {
-                    // TODO: Log the exception - there was a problem attempting to create the ticket
+                    throw;
                 }
             }
 
@@ -174,35 +158,28 @@ namespace DataAccess.Repositories
         /// </summary>
         /// <param name="ticketId">The ID of the ticket to remove.</param>
         /// <returns>Returns true if ticket was removed, or false if it wasn't.</returns>
-        public bool DoRemoveTicket(int ticketId)
+        public bool DoRemoveTicket(Ticket ticket)
         {
             // return flag to denote whether the remove action took place OK
             bool wasRemoved = false;
 
-            // check parameter supplied - the ticket ID must be a number above 0
-            if (ticketId > 0)
+            // check parameter supplied - the ticket must not be null
+            if (ticket != null)
             {
                 try
-                {
-                    // attempt to find a ticket matching the ID supplied
-                    Ticket ticketToRemove = c_context.Tickets.Find(ticketId);
+                {                    
+                    // try the remove            
+                    c_context.Entry(ticket).State = EntityState.Deleted;
 
-                    // was a matching ticket found?
-                    if (ticketToRemove != null)
-                    {
-                        // try the remove
-                        c_context.Tickets.Remove(ticketToRemove);
+                    // save the context changes
+                    c_context.SaveChanges();                    
 
-                        // save the context changes
-                        c_context.SaveChanges();
-
-                        // set flag for successful removal of ticket
-                        wasRemoved = true;
-                    }
+                    // set flag for successful removal of ticket
+                    wasRemoved = true;
                 }
                 catch(Exception ex)
                 {
-                    // TODO: Log the exception - there was a problem attempting to delete the ticket
+                    throw;
                 }
             }
 

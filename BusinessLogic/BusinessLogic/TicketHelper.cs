@@ -45,8 +45,15 @@ namespace BusinessLogic
         /// Returns null if no tickets are found.</returns>
         public IList<Ticket> RetrieveAllTickets()
         {
-            // fetch all tickets from the repository supplied in the constructor method and return them
-            return c_repository.RetrieveAllTickets();
+            try
+            {
+                // fetch all tickets from the repository supplied in the constructor method and return them
+                return c_repository.RetrieveAllTickets();
+            }
+            catch(ArgumentNullException ex)
+            {
+                throw;
+            }            
         }
 
         /// <summary>
@@ -57,19 +64,32 @@ namespace BusinessLogic
         /// Returns null if no ticket was found with the ID supplied.</returns>
         public Ticket RetrieveTicket(int ticketId)
         {
-            // fetch ticket for ticket ID supplied
-            return c_repository.RetrieveTicket(ticketId);
+            try
+            {
+                // fetch ticket for ticket ID supplied
+                return c_repository.RetrieveTicket(ticketId);
+            }
+            catch (ArgumentNullException ex)
+            {
+                throw;
+            }
         }
 
         /// <summary>
         /// Saves the ticket supplied to the repository supplied in the constructor.
         /// </summary>
         /// <param name="ticket">The new version of the ticket which needs updating.</param>
-        /// <returns>Returns the updated ticket.
-        /// Returns null if the ticket to update was not found.</returns>
-        public Ticket UpdateTicket(Ticket ticket)
+        /// <returns>Returns true if ticket updated OK, false if not.</returns>
+        public bool DoUpdateTicket(Ticket ticket)
         {
-            return c_repository.UpdateTicket(ticket);
+            try
+            {
+                return c_repository.DoUpdateTicket(ticket);
+            }            
+            catch(Exception ex)
+            {
+                throw;
+            }
         }
 
         /// <summary>
@@ -80,17 +100,31 @@ namespace BusinessLogic
         /// Returns null if the ticket was not created.</returns>
         public Ticket AddTicket(Ticket ticket)
         {
-            return c_repository.AddTicket(ticket);
+            try
+            {
+                return c_repository.AddTicket(ticket);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         /// <summary>
         /// Removes the ticket from the respotiory supplied in the constructor.
         /// </summary>
-        /// <param name="ticketId">The ticket ID of the ticket to remove.</param>
+        /// <param name="ticketId">The ticket to remove.</param>
         /// <returns>Returns true for success, false for failure.</returns>
-        public bool DoRemoveTicket(int ticketId)
+        public bool DoRemoveTicket(Ticket ticket)
         {
-            return c_repository.DoRemoveTicket(ticketId);
+            try
+            {
+                return c_repository.DoRemoveTicket(ticket);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         #endregion

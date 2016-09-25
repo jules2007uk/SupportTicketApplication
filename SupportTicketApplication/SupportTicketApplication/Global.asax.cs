@@ -21,17 +21,26 @@ using System.Web.Routing;
 namespace SupportTicketApplication
 {
     public class MvcApplication : System.Web.HttpApplication
-    {
-        //TODO: Clean up this class
+    {        
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            #region Configure Autofac
+            ConfigureAutofac();
 
-            var builder = new ContainerBuilder();
+            ConfigureAutoMapper();
+        }
+
+        /// <summary>
+        /// Configures Autofac for dependency injection.
+        /// </summary>
+        /// <remarks>Injects the SupportTicketContext into the Tickets controller.</remarks>
+        private void ConfigureAutofac()
+        {
+            ContainerBuilder builder = new ContainerBuilder();
+            IContainer container = null;
 
             // Register your MVC controllers.
             builder.RegisterControllers(typeof(MvcApplication).Assembly);
@@ -39,43 +48,24 @@ namespace SupportTicketApplication
             // register the TicketRepository as the implementation of ITicketRepository, with the context parameter specified
             builder.RegisterType<TicketRepository>().As<ITicketRepository>().WithParameter("context", new SupportTicketContext());
 
-            //// OPTIONAL: Register model binders that require DI.
-            //builder.RegisterModelBinders(Assembly.GetExecutingAssembly());
-            //builder.RegisterModelBinderProvider();
-
-            //// OPTIONAL: Register web abstractions like HttpContextBase.
-            //builder.RegisterModule<AutofacWebTypesModule>();
-
-            //// OPTIONAL: Enable property injection in view pages.
-            //builder.RegisterSource(new ViewRegistrationSource());
-
-            //// OPTIONAL: Enable property injection into action filters.
-            //builder.RegisterFilterProvider();
-
             // Set the dependency resolver to be Autofac.
-            var container = builder.Build();
+            container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+        }
 
-            #endregion
-
-            #region Configure Automapper
-
-            // set up the Automapper for mapping objects to other objects
+        /// <summary>
+        /// Configures AutoMapper custom mappings.
+        /// </summary>
+        /// <remarks>Creates mappings for the Ticket entity to TicketIndexViewModel, TicketDetailViewModel, and TicketCreateViewModel respectively.</remarks>
+        private void ConfigureAutoMapper()
+        {
+            // set up Automapper for mapping Ticket objects to view model equivalents
             Mapper.Initialize(config =>
             {
-               config.CreateMap<Ticket, TicketIndexViewModel>().ReverseMap();
-               config.CreateMap<Ticket, TicketDetailViewModel>().ReverseMap();
-               config.CreateMap<Ticket, TicketCreateViewModel>().ReverseMap();
+                config.CreateMap<Ticket, TicketIndexViewModel>().ReverseMap();
+                config.CreateMap<Ticket, TicketDetailViewModel>().ReverseMap();
+                config.CreateMap<Ticket, TicketCreateViewModel>().ReverseMap();
             });
-
-            #endregion
-
-            #region Configure Identity Framework
-
-            // TODO: Configure ASP.Net Identity Framework
-
-            #endregion
-
         }
     }
 }

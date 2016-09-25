@@ -33,9 +33,8 @@ namespace DataAccess.Repositories
         /// Updates the ticket supplied.
         /// </summary>
         /// <param name="ticket">The ticket to save.</param>
-        /// <returns>Returns the updated ticket.
-        /// Returns null if there was an issue during the update.</returns>
-        Ticket UpdateTicket(Ticket ticket);
+        /// <returns>Returns true if ticket updated OK, false if not.</returns>
+        bool DoUpdateTicket(Ticket ticket);
 
         /// <summary>
         /// Adds a new Ticket.
@@ -48,9 +47,9 @@ namespace DataAccess.Repositories
         /// <summary>
         /// Removes a Ticket.
         /// </summary>
-        /// <param name="ticketId">The ID of the ticket to remove.</param>
+        /// <param name="ticket">The ticket to remove.</param>
         /// <returns>Returns true if ticket was removed, or false if it wasn't.</returns>
-        bool DoRemoveTicket(int ticketId);
+        bool DoRemoveTicket(Ticket ticket);
 
         #endregion
     }

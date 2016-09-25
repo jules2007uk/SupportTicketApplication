@@ -24,6 +24,13 @@ namespace SupportTicketApplication
                 url: "{controller}/{action}/",
                 defaults: new { controller = "Ticket", action = "Index"}
             );
+
+            // routing for Elmah logging
+            routes.MapRoute(
+                "Admin_elmah",
+                "Admin/elmah/{type}",
+                new { action = "Index", controller = "Elmah", type = UrlParameter.Optional }
+            );
         }
     }
 }
