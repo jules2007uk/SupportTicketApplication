@@ -186,7 +186,10 @@ namespace SupportTicketApplication.Controllers
             {
                 TicketHelper ticketHelper = new TicketHelper(c_repository);
                 
-                // fetch ticket to update
+                // fetch ticket to update, as we'll then update that ticket and pass it back to the business logic layer to save
+                // although it might be more appropriate to hand off this work to the business logic layer?  
+                // the best solution to this is to change the code so that the incomingTicket can be mapped to a new ticket instance and then overwrite the entity in the DB in one call
+                // therefore there would be no need to load the existing ticket in the DB and modify its properties      
                 Ticket ticketToUpdate = ticketHelper.RetrieveTicket(incomingTicket.ID);
 
                 if(ticketToUpdate != null)
